@@ -66,8 +66,8 @@ go.Scatterpolar(
 ))
 
 fig.update_layout(showlegend=False)
-fig.show()
+#fig.show()
 
 fig = go.Figure(data=go.Scatter(x=MeasurementDistancesX, y=MeasurementDistancesY, mode='markers'))
 fig.update_layout(yaxis=dict(scaleanchor="x", scaleratio=1))
-fig.show()
+#fig.show()
