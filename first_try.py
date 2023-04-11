@@ -23,7 +23,7 @@ with open('out_startplatz_cut.txt') as csvfile:
     MeasurementDistancesX = []
     MeasurementDistancesY = []
 
-    #new arrays for sorting of values, just to try it out
+    #new arrays for sorting of values
     MeasurementAngles2 = []
     MeasurementDistances2 = []
     
@@ -56,27 +56,28 @@ with open('out_startplatz_cut.txt') as csvfile:
 #print(len(MeasurementDistancesX))
 
 #I combine the lists to sort them by ascending angle values
-
 Tobesorted = np.array([MeasurementAngles2,MeasurementDistances2,MeasurementDistancesX,MeasurementDistancesY])
 
-#define new matrix with columns sorted in ascending order by values in first row
+#define new matrix with columns sorted in ascending order by angle values in first row
 Sorted = Tobesorted[:, np.argsort(Tobesorted[0, :])]
 
-#view sorted matrix
 #Now I go back to lists to look at the distances of neighbouring values
-
 SortedDistancesX = Sorted[2]
 SortedDistancesY = Sorted[3]
+
+
+#initializing of lists for the values
+
 DistanceBetweenValues = []
 AnglesBetweenValues = []
-
-
+#here I include the first (random) data point to have a connected plot later on
 XforPlots = [SortedDistancesX[0]]
 YforPlots = [SortedDistancesY[0]]
-# problem: when first value is from window, solve later on
+
 Xred = []
 Yred= []
-#trying points that are a bit more far away? change i=1 to other value?
+
+#determine distance and angles between neighbouring values
 i = 1
 while i < len(SortedDistancesX)-1:
     Xvalue = SortedDistancesX[i]
@@ -90,12 +91,15 @@ while i < len(SortedDistancesX)-1:
 
     AnglesBetweenValues.append(getAngle(Xvalue,Yvalue,Xvalue2,Yvalue2,Xvalue3,Yvalue3))
     DistanceBetweenValues.append(distance(Xvalue,Xvalue2,Yvalue,Yvalue2))
+
     if distance(Xvalue,Xvalue2,Yvalue,Yvalue2) < 300: #first value: 2000
-        #only when ecke the point will be saved for the plot later on
-        #first_try_figure1: for angles > 40 and < 140
+        #only when the angle has a certain value, they are saved to (hopefully) mark corner points
+        #first_try_figure1.png: for angles > 40 and < 140
         if getAngle(Xvalue,Yvalue,Xvalue2,Yvalue2,Xvalue3,Yvalue3) > 40 and getAngle(Xvalue,Yvalue,Xvalue2,Yvalue2,Xvalue3,Yvalue3) < 140:
             XforPlots.append(Xvalue)
             YforPlots.append(Yvalue)
+    #if the distance between neighbouring values is higher than as defined above (here: 300),
+    #they are saved to later be marked as red
     else:
         Xred.append(Xvalue)
         Xred.append(Xvalue2)
@@ -112,14 +116,14 @@ while i < len(SortedDistancesX)-1:
 #print(DistanceBetweenValues[0:20])
 #print(AnglesBetweenValues[0:20])
 
-plt.plot(XforPlots,YforPlots, color="black")
+plt.plot(XforPlots,YforPlots, color="black",marker="x")
 plt.scatter(Xred,Yred,color="red")
 plt.axis("scaled")
 #plt.plot(Xred,Yred, color="red")
 plt.show()
 
-print(len(XforPlots))
-print(len(SortedDistancesX))
+#print(len(XforPlots))
+#print(len(SortedDistancesX))
 
 
 
