@@ -59,12 +59,10 @@ with open('out_startplatz_cut.txt') as csvfile:
 
 Tobesorted = np.array([MeasurementAngles2,MeasurementDistances2,MeasurementDistancesX,MeasurementDistancesY])
 
-#define new matrix with columns sorted in ascending order by values in first row
+#define new matrix with columns sorted in ascending order by angle values in first row
 Sorted = Tobesorted[:, np.argsort(Tobesorted[0, :])]
 
-#view sorted matrix
 #Now I go back to lists to look at the distances of neighbouring values
-
 SortedAngles = Sorted[0]
 SortedDistances = Sorted[1]
 SortedDistancesX = Sorted[2]
@@ -72,8 +70,8 @@ SortedDistancesY = Sorted[3]
 
 
 
-print(MeasurementAngles2[0:30])
-print(MeasurementDistances2[0:30])
+#print(MeasurementAngles2[0:30])
+#print(MeasurementDistances2[0:30])
 
 Xcorners = []
 Ycorners = []
@@ -84,6 +82,8 @@ YcornersSorted = []
 Xred = []
 Yred = []
 
+
+#finding corners through a change in the sign of the changes of rho for unsorted values (values not sorted by angle phi)
 i=2
 
 while i < len(MeasurementAngles2)-2:
@@ -112,6 +112,8 @@ while i < len(MeasurementAngles2)-2:
 
     i=i+1
 
+
+#finding corners through a change in the sign of the changes of rho for sorted values (values sorted by angle phi)
 j=2
 
 while j < len(SortedAngles)-2:
@@ -135,8 +137,7 @@ while j < len(SortedAngles)-2:
 
     j=j+1
 
-finalCornersX = []
-finalCornersY = []
+
 #plt.scatter(MeasurementDistancesX, MeasurementDistancesY, color="black")
 #plt.scatter(XcornersSorted,YcornersSorted, color="blue")
 plt.plot(Xcorners,Ycorners, color="black")
