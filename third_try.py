@@ -59,10 +59,10 @@ with open('out_startplatz_cut.txt') as csvfile:
 
 Tobesorted = np.array([MeasurementAngles2,MeasurementDistances2,MeasurementDistancesX,MeasurementDistancesY])
 
-#define new matrix with columns sorted in ascending order by values in first row
+#define new matrix with columns sorted in ascending order by angle values in first row
 Sorted = Tobesorted[:, np.argsort(Tobesorted[0, :])]
 
-#view sorted matrix
+
 #Now I go back to lists to look at the distances of neighbouring values
 
 SortedAngles = Sorted[0]
@@ -71,8 +71,6 @@ SortedDistancesX = Sorted[2]
 SortedDistancesY = Sorted[3]
 
 #Now I want to try and get the mean for ranges of 1 degree
-#print(SortedAngles[0:40])
-
 MeanAngles = []
 MeanDistances = []
 MeanX = []
@@ -89,11 +87,13 @@ for ang in range(0,360):
     sumrho = 0
     numberofvalues = 0
     for i in range(0,len(SortedAngles)):
-       
+       #Get the mean for an interval (length 1 degree) of points 
         if SortedAngles[i] >= ang + 1:
+            #if there is just one value in the interval, I treat it as an outlier
             if numberofvalues <= 1:
                 break
             else:
+                #if not, I calculate the mean
                 MeanAngles.append(sumphi/numberofvalues)
                 MeanDistances.append(sumrho/numberofvalues)
                 [X,Y] = pol2cart(sumrho/numberofvalues, -(2 * math.pi * sumphi/numberofvalues / 360))

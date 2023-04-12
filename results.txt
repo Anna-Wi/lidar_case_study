@@ -1,5 +1,3 @@
-#gives x and y values of the found corners (in black)
-# and of the values near "no data points" (in red)
 #Xvalue Yvalue Black?(if red = False)
 2511.162201673868 -694.6372780059846 True
 1466.2555019239794 -1597.122598049729 True
