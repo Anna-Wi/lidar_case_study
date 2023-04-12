@@ -116,7 +116,7 @@ while i < len(SortedDistancesX)-1:
 #print(DistanceBetweenValues[0:20])
 #print(AnglesBetweenValues[0:20])
 
-plt.plot(XforPlots,YforPlots, color="black",marker="x")
+plt.plot(XforPlots,YforPlots, color="black")#,marker="x")
 plt.scatter(Xred,Yred,color="red")
 plt.axis("scaled")
 #plt.plot(Xred,Yred, color="red")
